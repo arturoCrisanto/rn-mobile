@@ -4,7 +4,7 @@
     "slug": "mobile",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExYmhuYm5xZ2YxbzByMXprc2FyejJhc2t2NGtlM3Nsd3B4c2dmbmZlciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Qvjfk2SX1K0waS2FAI/giphy.gif",
     "scheme": "mobile",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
