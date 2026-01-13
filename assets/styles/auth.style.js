@@ -62,6 +62,13 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
   },
+  verificationButtons: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 10,
+    width: "100%",
+  },
   verificationContainer: {
     flex: 1,
     backgroundColor: COLORS.background,

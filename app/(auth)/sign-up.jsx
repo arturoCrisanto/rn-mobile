@@ -38,7 +38,12 @@ export default function SignUpScreen() {
     } catch (err) {
       // See https://clerk.com/docs/custom-flows/error-handling
       // for more info on error handling
-      console.error(JSON.stringify(err, null, 2))
+      if (err.errors && err.errors.length > 0) {
+        const errorMessages = err.errors.map(e => e.longMessage).join('\n');
+        setError(errorMessages);
+      } else {
+        setError('An error occurred during sign-up. Please try again.');
+      }
     }
   }
 
@@ -65,12 +70,24 @@ export default function SignUpScreen() {
     } catch (err) {
       // See https://clerk.com/docs/custom-flows/error-handling
       // for more info on error handling
-      console.error(JSON.stringify(err, null, 2))
+      if (err.errors && err.errors.length > 0) {
+        const errorMessages = err.errors.map(e => e.longMessage).join('\n');
+        setError(errorMessages);
+      } else {
+        setError('Verification failed. Please try again.');
+      }
     }
   }
 
   if (pendingVerification) {
     return (
+      <KeyboardAwareScrollView
+      style={{ flex: 1 }}
+      contentContainerStyle={{ flexGrow: 1 }}
+      enableOnAndroid={true}
+      enableAutomaticScroll={true}
+      extraScrollHeight={70}
+    > 
       <View style={styles.verificationContainer}>
         <Text style={styles.verificationTitle}>Verify your email</Text>
 
@@ -92,10 +109,16 @@ export default function SignUpScreen() {
           onChangeText={(code) => setCode(code)}
           keyboardType="numeric"
         />
+        <View style={styles.verificationButtons}>
         <TouchableOpacity onPress={onVerifyPress} style={styles.button}>
           <Text style={styles.buttonText}>Verify</Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={() =>  router.push('/sign-up')} style={styles.button}>
+          <Text style={styles.buttonText}>Back</Text>
+        </TouchableOpacity>
+        </View>
       </View>
+      </KeyboardAwareScrollView>
     )
   }
 
