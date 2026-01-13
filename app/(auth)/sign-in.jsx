@@ -1,5 +1,6 @@
 import { styles } from '@/assets/styles/auth.style.js';
 import { COLORS } from '@/constants/colors.js';
+import logger from '@/lib/logger';
 import { useSignIn } from '@clerk/clerk-expo';
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
@@ -38,7 +39,7 @@ export default function Page() {
         // If the status isn't complete, check why. User might need to
         // complete further steps.
         setError('Additional authentication steps are required. Please try again.')
-        console.error(JSON.stringify(signInAttempt, null, 2))
+        logger.error('Sign-in incomplete:', JSON.stringify(signInAttempt, null, 2))
       }
     } catch (err) {
       if (err.errors && err.errors.length > 0) {

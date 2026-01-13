@@ -1,5 +1,6 @@
 import { styles } from "@/assets/styles/auth.style.js";
 import { COLORS } from "@/constants/colors.js";
+import logger from '@/lib/logger';
 import { useSignUp } from '@clerk/clerk-expo';
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from "expo-image";
@@ -65,7 +66,7 @@ export default function SignUpScreen() {
       } else {
         // If the status is not complete, check why. User may need to
         // complete further steps.
-        console.error(JSON.stringify(signUpAttempt, null, 2))
+        logger.error('Sign-up incomplete:', JSON.stringify(signUpAttempt, null, 2))
       }
     } catch (err) {
       // See https://clerk.com/docs/custom-flows/error-handling
