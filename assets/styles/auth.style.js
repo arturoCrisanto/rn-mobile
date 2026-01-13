@@ -12,7 +12,6 @@ export const styles = StyleSheet.create({
   illustration: {
     width: "100%",
     height: 310,
-    resizeMode: "contain",
   },
   title: {
     fontSize: 32,
@@ -95,6 +94,14 @@ export const styles = StyleSheet.create({
     width: "100%",
     textAlign: "center",
     letterSpacing: 2,
+  },
+  verificationBackButton: {
+    backgroundColor: COLORS.expense,
+    borderRadius: 12,
+    padding: 16,
+    alignItems: "center",
+    marginTop: 10,
+    marginBottom: 20,
   },
 
   // 🔴 Error styles

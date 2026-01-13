@@ -113,7 +113,7 @@ export default function SignUpScreen() {
         <TouchableOpacity onPress={onVerifyPress} style={styles.button}>
           <Text style={styles.buttonText}>Verify</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() =>  router.push('/sign-up')} style={styles.button}>
+        <TouchableOpacity onPress={() =>  router.push('/sign-up')} style={styles.verificationBackButton}>
           <Text style={styles.buttonText}>Back</Text>
         </TouchableOpacity>
         </View>
@@ -131,7 +131,11 @@ export default function SignUpScreen() {
       extraScrollHeight={100}
     >
       <View style={styles.container}>
-        <Image source={require("../../assets/images/revenue-i2.png")} style={styles.illustration} />
+        <Image
+          source={require("../../assets/images/revenue-i2.png")}
+          style={styles.illustration}
+          contentFit="contain"
+        />
 
         <Text style={styles.title}>Create Account</Text>
 
@@ -169,7 +173,7 @@ export default function SignUpScreen() {
 
         <View style={styles.footerContainer}>
           <Text style={styles.footerText}>Already have an account?</Text>
-          <TouchableOpacity onPress={() => router.back()}>
+          <TouchableOpacity onPress={() => router.push('/sign-in')}>
             <Text style={styles.linkText}>Sign in</Text>
           </TouchableOpacity>
         </View>
