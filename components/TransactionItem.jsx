@@ -1,7 +1,8 @@
 import { styles } from '@/assets/styles/home.styles.js';
 import { COLORS } from '@/constants/colors.js';
+import { formatAmount, formatDate } from '@/lib/utils.js';
 import { Ionicons } from '@expo/vector-icons';
-import { TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 
 
 // Map categories to their respective icons
@@ -18,17 +19,17 @@ const CATEGORY_ICONS = {
 
 export const TransactionItem = ({ item, onDelete }) => {
 const isIncome = parseFloat(item.amount) >= 0;
-const iconName = CATEGORY_ICONS[item.category] || "price-tag-outline";
+const iconName = CATEGORY_ICONS[item.category] || "pricetag-outline";
 
     return (
-    <View style={styles.transactionCard} key={id}>
+    <View style={styles.transactionCard}>
         <TouchableOpacity style={styles.transactionContent}>
 
             {/* this is for category icon */}
             <View style={styles.categoryIconContainer}>
                 <Ionicons
                 name={iconName}
-                size={24}
+                size={22}
                 color={isIncome ? COLORS.income : COLORS.expense}
                 />
             </View>
@@ -43,13 +44,14 @@ const iconName = CATEGORY_ICONS[item.category] || "price-tag-outline";
                 <Text
                  style={[styles.transactionAmount, { color: isIncome ? COLORS.income : COLORS.expense }]}
                 >
-                {isIncome ? "+₱" : "-₱"}${Math.abs(parseFloat(item.amount)).toFixed(2)}
+                {isIncome ? "+₱" : "-₱"}{formatAmount(Math.abs(parseFloat(item.amount)))}
                 </Text>
-          <Text style={styles.transactionDate}>{formatDate(item.created_at)}</Text>
+                <Text style={styles.transactionDate}>{formatDate(item.created_at)}</Text>
             </View>
         </TouchableOpacity>
         {/* this is for the delete button */}
-        <TouchableOpacity style={styles.deleteButton} onPress={() => onDelete(item.id)}>
+        {/* item._id is for the unique identifier of the transaction in the mongodb ._id */}
+        <TouchableOpacity style={styles.deleteButton} onPress={() => onDelete(item._id)}>
             <Ionicons name="trash-outline" size={20} color={COLORS.expense} />
         </TouchableOpacity>
     </View>

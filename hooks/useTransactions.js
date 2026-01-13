@@ -32,7 +32,8 @@ export const useTransactions = (userId) => {
       }
 
       const data = await response.json();
-      setTransactions(data);
+      // Extract the data array from the API response
+      setTransactions(data.data || data);
     } catch (error) {
       logger.error("Error fetching transactions:", error);
     }

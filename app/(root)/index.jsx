@@ -2,6 +2,7 @@ import { styles } from '@/assets/styles/home.styles.js'
 import BalanceCard from '@/components/BalanceCard.jsx'
 import PageLoader from '@/components/PageLoader'
 import { SignOutButton } from '@/components/SignOutButton.jsx'
+import { TransactionItem } from '@/components/TransactionItem.jsx'
 import { COLORS } from '@/constants/colors.js'
 import { extractUsername } from '@/lib/utils.js'
 import { useUser } from '@clerk/clerk-expo'
@@ -9,7 +10,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { Image } from 'expo-image'
 import { useRouter } from 'expo-router'
 import { useEffect, useMemo } from 'react'
-import { FlatList, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, FlatList, Text, TouchableOpacity, View } from 'react-native'
 import { useTransactions } from '../../hooks/useTransactions'
 
 export default function Page() {
@@ -24,6 +25,26 @@ export default function Page() {
   useEffect(() => {
     loadData();
   }, [loadData]);
+
+  const handleDelete = async (id) => {
+    Alert.alert(
+      "Confirm Deletion",
+      "Are you sure you want to delete this transaction?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: async () => {
+            await deleteTransaction(id);
+          }
+        }
+      ]
+    )
+  }
 
  if(loading) return <PageLoader />
 
@@ -77,8 +98,6 @@ export default function Page() {
       renderItem={({item})=>(
         <TransactionItem item={item} onDelete={handleDelete} />
       )}
-
-
       /> 
     </View>
   )
