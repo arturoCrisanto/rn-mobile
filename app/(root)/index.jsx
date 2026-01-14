@@ -10,19 +10,31 @@ import { useUser } from '@clerk/clerk-expo'
 import { Ionicons } from '@expo/vector-icons'
 import { Image } from 'expo-image'
 import { useRouter } from 'expo-router'
-import { useEffect, useMemo } from 'react'
-import { Alert, FlatList, Text, TouchableOpacity, View } from 'react-native'
+import { useEffect, useMemo, useState } from 'react'
+import { Alert, FlatList, RefreshControl, Text, TouchableOpacity, View } from 'react-native'
 import { useTransactions } from '../../hooks/useTransactions'
 
 export default function Page() {
+  // this is for fetching user data from clerk
   const { user } = useUser()
   const router = useRouter()
+  const [refreshing, setRefreshing] =useState(false);
+
   const {transactions, summary, loading, loadData, deleteTransaction} = useTransactions(user?.id)
 
   // Memoize the username extraction to avoid unnecessary recalculations
   // used the extractUsername utility function to get username from user object
   const username = useMemo(() => extractUsername(user), [user])
 
+  // this is the onRefresh function to handle pull to refresh
+  // this is used to refresh the data when user pulls down the list
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await loadData();
+    setRefreshing(false);
+  }
+
+// this  is the useEffect to load data on component mount
   useEffect(() => {
     loadData();
   }, [loadData]);
@@ -47,7 +59,8 @@ export default function Page() {
     )
   }
 
- if(loading) return <PageLoader />
+  // the simple logic of this is if loading and not refreshing then show the page loader
+ if(loading && !refreshing) return <PageLoader />
 
   return (
     <View style={styles.container}>
@@ -64,7 +77,9 @@ export default function Page() {
                 />
                 <View style={styles.welcomeContainer}>
                   <Text style={styles.welcomeText}>Welcome</Text>
+                  {/* this is the username text that is displayed below the welcome message */}
                   <Text style={styles.usernameText}>
+                    {/* this is the username extracted from the user object from above */}
                     {username}
                   </Text>
 
@@ -93,13 +108,23 @@ export default function Page() {
       </View>
 
       <FlatList
+      // this is for the list of transaction styles for the FlatList
       style={styles.transactionsList}
+      // this is for the container that holds all the transaction items
       contentContainerStyle={styles.transactionsListContent}
       data={transactions}
+      // this is to render each transaction item
       renderItem={({item})=>(
         <TransactionItem item={item} onDelete={handleDelete} />
       )}
+      // this is for the list empty component
       ListEmptyComponent={<NoTransactionFound />}
+      // this is to remove the scroll indicator
+      showsVerticalScrollIndicator={false}
+
+      //the refresh control is from react native to handle pull to refresh
+      // not a component
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}
       /> 
     </View>
   )

@@ -11,6 +11,7 @@ export const useTransactions = (userId) => {
     expense: 0,
     balance: 0,
   });
+  // this is the loading state to indicate data fetching status
   const [loading, setLoading] = useState(true);
 
   // usecallback is used to memoize the fetchTransactions function and performace optimization
@@ -73,6 +74,7 @@ export const useTransactions = (userId) => {
     } finally {
       setLoading(false);
     }
+    // the dependencies are fetchTransactions and fetchSummary to avoid unnecessary re-fetching
   }, [fetchTransactions, fetchSummary, userId]);
 
   const deleteTransaction = async (id) => {
