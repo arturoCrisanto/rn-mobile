@@ -33,7 +33,9 @@ export const useTransactions = (userId) => {
       }
 
       const data = await response.json();
+
       // Extract the data array from the API response
+      // also handle both cases where data is directly an array or wrapped in a data object
       setTransactions(data.data || data);
     } catch (error) {
       logger.error("Error fetching transactions:", error);
@@ -58,7 +60,9 @@ export const useTransactions = (userId) => {
       }
 
       const data = await response.json();
+
       // Extract the data object from the API response
+      // also handle both cases where data is directly an object or wrapped in a data object
       setSummary(data.data || data);
     } catch (error) {
       logger.error("Error fetching summary:", error);
