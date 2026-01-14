@@ -1,5 +1,6 @@
 import { styles } from '@/assets/styles/home.styles.js'
 import BalanceCard from '@/components/BalanceCard.jsx'
+import NoTransactionFound from '@/components/NoTransactionFound.jsx'
 import PageLoader from '@/components/PageLoader'
 import { SignOutButton } from '@/components/SignOutButton.jsx'
 import { TransactionItem } from '@/components/TransactionItem.jsx'
@@ -98,6 +99,7 @@ export default function Page() {
       renderItem={({item})=>(
         <TransactionItem item={item} onDelete={handleDelete} />
       )}
+      ListEmptyComponent={<NoTransactionFound />}
       /> 
     </View>
   )

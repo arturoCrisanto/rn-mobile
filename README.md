@@ -1,50 +1,57 @@
-# Welcome to your Expo app 👋
+# RN Wallet (mobile)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+React Native + Expo app for a personal wallet dashboard. Users sign in with Clerk, view income/expense summaries, browse transactions from the wallet API, and remove entries. Built with Expo Router and runs on iOS, Android, and web.
 
-## Get started
+## Features
 
-1. Install dependencies
+- Email/password auth via Clerk with protected/root routes
+- Transaction list with delete flow and loading states
+- Income, expense, and balance summary fetched from the API
+- Shared UI components (balance card, transaction item, empty state) and safe-area wrapper
 
-   ```bash
-   npm install
-   ```
+## Tech stack
 
-2. Start the app
+- React Native 0.81, Expo SDK 54, Expo Router
+- Clerk Expo SDK for authentication
+- React Navigation primitives for stacks/tabs
 
-   ```bash
-   npx expo start
-   ```
+## Requirements
 
-In the output, you'll find options to open the app in a
+- Node.js 18+ and npm
+- Expo CLI (installed via `npm i -g expo-cli` is optional; `npx expo start` also works)
+- iOS Simulator, Android Emulator, or Expo Go for running locally
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Environment variables
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+Create a `.env` file in the project root:
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
+EXPO_PUBLIC_API_URL=https://your-api.example.com
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+`EXPO_PUBLIC_API_URL` should point to the backend that serves `/api/transactions/:userId` and `/api/transactions/summary/:userId`.
 
-## Learn more
+## Getting started
 
-To learn more about developing your project with Expo, look at the following resources:
+1. Install deps
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+npm install
+```
 
-## Join the community
+2. Run the app (choose one target)
 
-Join our community of developers creating universal apps.
+```bash
+npm run start     # Expo Dev Tools
+npm run android   # Launch Android emulator or device
+npm run ios       # Launch iOS simulator
+npm run web       # Run in a web browser
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+When Dev Tools open, choose to run in a development build, simulator/emulator, or Expo Go.
+
+## Useful scripts
+
+- `npm run lint` – lint the project
+- `npm run reset-project` – reset to a blank app shell (keeps starter in `app-example`)
